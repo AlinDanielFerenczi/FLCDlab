@@ -1,0 +1,7 @@
+D:\Faculty\FLCDCourse\labproject\labproject\bin\Debug\labproject.exe.config
+D:\Faculty\FLCDCourse\labproject\labproject\bin\Debug\labproject.exe
+D:\Faculty\FLCDCourse\labproject\labproject\bin\Debug\labproject.pdb
+D:\Faculty\FLCDCourse\labproject\labproject\obj\Debug\labproject.csprojAssemblyReference.cache
+D:\Faculty\FLCDCourse\labproject\labproject\obj\Debug\labproject.csproj.CoreCompileInputs.cache
+D:\Faculty\FLCDCourse\labproject\labproject\obj\Debug\labproject.exe
+D:\Faculty\FLCDCourse\labproject\labproject\obj\Debug\labproject.pdb
