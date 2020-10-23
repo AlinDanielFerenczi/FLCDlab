@@ -5,3 +5,13 @@ D:\Faculty\FLCDCourse\labproject\labproject\obj\Debug\labproject.csprojAssemblyR
 D:\Faculty\FLCDCourse\labproject\labproject\obj\Debug\labproject.csproj.CoreCompileInputs.cache
 D:\Faculty\FLCDCourse\labproject\labproject\obj\Debug\labproject.exe
 D:\Faculty\FLCDCourse\labproject\labproject\obj\Debug\labproject.pdb
+D:\Faculty\FLCDCourse\FLCDlab\labproject\obj\Debug\labproject.csprojAssemblyReference.cache
+D:\Faculty\FLCDCourse\FLCDlab\labproject\obj\Debug\labproject.csproj.CoreCompileInputs.cache
+D:\Faculty\FLCDCourse\FLCDlab\labproject\obj\Debug\labproject.exe
+D:\Faculty\FLCDCourse\FLCDlab\labproject\obj\Debug\labproject.pdb
+D:\Faculty\FLCDCourse\FLCDlab\labproject\bin\Debug\labproject.exe.config
+D:\Faculty\FLCDCourse\FLCDlab\labproject\bin\Debug\labproject.exe
+D:\Faculty\FLCDCourse\FLCDlab\labproject\bin\Debug\labproject.pdb
+D:\Faculty\FLCDCourse\FLCDlab\labproject\bin\Debug\Newtonsoft.Json.dll
+D:\Faculty\FLCDCourse\FLCDlab\labproject\bin\Debug\Newtonsoft.Json.xml
+D:\Faculty\FLCDCourse\FLCDlab\labproject\obj\Debug\labproject.csproj.CopyComplete

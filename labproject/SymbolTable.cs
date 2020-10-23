@@ -28,22 +28,6 @@ namespace labproject
             return Math.Abs(position);
         }
 
-        public string Find(string elem)
-        {
-            var key = GetHashCode(elem);
-            LinkedList<KeyValue<int, string>> linkedList = GetLinkedList(GetArrayPosition(key));
-
-            foreach (KeyValue<int, string> item in linkedList)
-            {
-                if (item.Key.Equals(key))
-                {
-                    return item.Value;
-                }
-            }
-
-            return default;
-        }
-
         public bool Exists(string elem)
         {
             var key = GetHashCode(elem);
