@@ -1,10 +1,12 @@
-array a <- [5,6,7,8]
+int a <- {5,6,7,8}
 int r <- 0
 
 for int n : a
 {
-    if (n%2=0)
+    if(n%2 = 0m)
     {
-        r += n
+        R += n
     }
 }
+
+int result <- r

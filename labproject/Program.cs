@@ -3,16 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace labproject
 {
-    class Program
+    class Scanner
     {
+        static List<Tuple<int, string>> PIF = new List<Tuple<int, string>>();
+        static SymbolTable ST = new SymbolTable(200);
+
         static void Main(string[] args)
         {
             Scanning("test.txt");
+            Console.ReadKey();
         }
 
         static void TestST()
@@ -38,41 +41,114 @@ namespace labproject
             Console.ReadKey();
         }
 
-        static void Scanning(string filePath)
+        public static void Scanning(string filePath)
         {
-            var tokens = ReadTokens();
-            var PIF = new Dictionary<int, string>();
-            var ST = new SymbolTable(200);
 
-            string[] textTokenized;
+            var textTokenized = new List<KeyValuePair<int, string>>();
 
             using (var r = new StreamReader(filePath))
             {
-                textTokenized = r.ReadToEnd().Split(new char[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-            }
-
-            foreach(var text in textTokenized)
-            {
-                string copy = text;
-                foreach(var token in tokens)
+                for(var lineNumber = 1; r.Peek() != -1; lineNumber++)
                 {
-                    if(text.Contains(token.Key))
-                    {
-                        copy = copy.Replace(token.Key, " ");
-                    }
+                    textTokenized.Add(new KeyValuePair<int, string>(lineNumber, r.ReadLine()));
                 }
-                Console.WriteLine(copy);
             }
 
-            Console.ReadKey();
+            FilterTokens(textTokenized);
+
+            PrintContent();
         }
 
-        static Dictionary<string, int> ReadTokens()
+        public static Dictionary<string, int> ReadTokens()
         {
-            using (var r = new StreamReader("token.json"))
+            using var r = new StreamReader("token.json");
+            string json = r.ReadToEnd();
+            return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+        }
+
+        public static void FilterTokens(List<KeyValuePair<int,string>> textTokenized)
+        {
+            var tokens = ReadTokens();
+
+            foreach (var text in textTokenized)
             {
-                string json = r.ReadToEnd();
-                return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+                var copy = (IEnumerable<char>)text.Value.ToCharArray();
+
+                while (copy.Count() > 0)
+                {
+                    var token = string.Empty;
+
+                    while(
+                        !(
+                            tokens.ContainsKey(token) || 
+                            copy.Count() == 0 || 
+                            copy.First() == ' ' || 
+                            tokens.ContainsKey(copy.First().ToString())
+                        ) || 
+                        (
+                            copy.Count() > 0 &&
+                            tokens.ContainsKey(token + copy.First()
+                        ))
+                    )
+                    {
+                        token += copy.First();
+                        copy = copy.Skip(1);
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(token))
+                    {
+                        if (!tokens.ContainsKey(token) && !DetectSymbol(token))
+                        {
+                            Console.WriteLine("Errot at line {0} for token {1}", text.Key, token);
+                            throw new Exception("Lexical error!");
+                        }
+                        PIF.Add(new Tuple<int, string>(DetectSymbol(token) ? ST.Add(token) : 0, token));
+                    }
+                    if(copy.Count() == 0)
+                        continue;
+
+                    var first = copy.First().ToString();
+
+                    copy = copy.Skip(1);
+
+                    if (string.IsNullOrWhiteSpace(first))
+                        continue;
+
+                    if(tokens.ContainsKey(first))
+                        PIF.Add(new Tuple<int, string>(0, first));
+                }
+            }
+        }
+
+        public static bool DetectSymbol(string token)
+        {
+            return IsConstant(token) || IsIdentifier(token);
+        }
+
+        public static bool IsIdentifier(string text)
+        {
+            return Regex.IsMatch(text, @"^[a-zA-Z]([a-zA-Z]|\d)*$");
+        }
+
+        public static bool IsConstant(string text)
+        {
+            return Regex.IsMatch(text, @"^((\""[^\""]*\"")|([1-9]\d{0,})|0)$");
+        }
+
+        public static void GenPIF(int index, string token)
+        {
+            PIF.Add(new Tuple<int, string>(index, token));
+        }
+
+        public static void PrintContent()
+        {
+            using (var r = new StreamWriter("ST.json"))
+            {
+                r.Write(ST.ToString());
+            }
+            using (var r = new StreamWriter("PIF.json"))
+            {
+                r.Write(JsonConvert.SerializeObject(PIF));
             }
         }
     }
