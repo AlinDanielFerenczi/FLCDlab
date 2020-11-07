@@ -1,0 +1,47 @@
+{
+    "initialState": "P",
+    "finalStates": [
+        "Q"
+    ],
+    "states": {
+        "P": {
+            "name": "P"
+        },
+        "Q": {
+            "name": "Q"
+        },
+        "R": {
+            "name": "R"
+        }
+    },
+    "transitions": [
+        {
+            "startState": "P",
+            "nextStates": [
+                "Q"
+            ],
+            "label": "a"
+        },
+        {
+            "startState": "Q",
+            "nextStates": [
+                "R"
+            ],
+            "label": "b"
+        },
+        {
+            "startState": "P",
+            "nextStates": [
+                "R"
+            ],
+            "label": "b"
+        },
+        {
+            "startState": "Q",
+            "nextStates": [
+                "Q"
+            ],
+            "label": "a"
+        }
+    ]
+}

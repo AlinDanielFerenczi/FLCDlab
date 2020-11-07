@@ -14,8 +14,57 @@ namespace labproject
 
         static void Main(string[] args)
         {
-            Scanning("test.txt");
-            Console.ReadKey();
+            PresentFA("FA.json");
+            //Console.ReadKey();
+        }
+
+        static void PresentFA(string path)
+        {
+            using var r = new StreamReader(path);
+
+            var FA = JsonConvert.DeserializeObject<FiniteAutomata>(r.ReadToEnd());
+
+            bool finished = false;
+            int option;
+
+            Console.WriteLine(FA.IsDeterministic() ? "Is deterministic" : "Is not deterministic");
+
+            Console.WriteLine("Menu:");
+            Console.WriteLine("1. Initial state");
+            Console.WriteLine("2. All States");
+            Console.WriteLine("3. Final States");
+            Console.WriteLine("4. Transitions");
+            Console.WriteLine("5. Alphabet");
+
+            while (!finished)
+            {
+                option = Convert.ToInt32(Console.ReadLine());
+
+                switch (option) {
+                    case (1):
+                        Console.WriteLine("Initial state: {0}", FA.initialState);
+                        break;
+                    case (2):
+                        Console.WriteLine("States: {0}",JsonConvert.SerializeObject(FA.states.Select(x=>x.Key)));
+                        break;
+                    case (3):
+                        Console.WriteLine("Final states: {0}", JsonConvert.SerializeObject(FA.finalStates));
+                        break;
+                    case (4):
+                        FA.transitions.Select(x => x.ToString()).ToList().ForEach(x => Console.WriteLine(x));
+                        break;
+                    case (5):
+                        Console.WriteLine("Alphabet: {0}", JsonConvert.SerializeObject(FA.transitions.Select(x => x.label.ToString()).ToHashSet()));
+                        break;
+                    default: 
+                        break;
+                }
+
+                if(option == 0)
+                {
+                    break;
+                }
+            }
         }
 
         static void TestST()

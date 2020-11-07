@@ -55,6 +55,7 @@ namespace labproject
             int key = GetHashCode(elem);
             LinkedList<KeyValue<int, string>> linkedList = GetLinkedList(GetArrayPosition(key));
             KeyValue<int, string> item = new KeyValue<int, string>() { Key = key, Value = elem };
+
             foreach (KeyValue<int, string> entry in linkedList)
             {
                 if (entry.Value.Equals(elem))
@@ -63,6 +64,7 @@ namespace labproject
                 }
             }
             linkedList.AddLast(item);
+            
             return key;
         }
 
