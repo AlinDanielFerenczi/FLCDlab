@@ -59,9 +59,7 @@ namespace labproject
             foreach (KeyValue<int, string> entry in linkedList)
             {
                 if (entry.Value.Equals(elem))
-                {
                     return key;
-                }
             }
             linkedList.AddLast(item);
             

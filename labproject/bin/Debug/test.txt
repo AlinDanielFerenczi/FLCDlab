@@ -1,12 +1,12 @@
-int a <- {5,6,7,8}
-int r <- 0
+int arr <- {5,6,7,8}
+int result <- 0
 
-for int n : a
+for int num : arr
 {
-    if(n%2 = 0m)
+    if(num%2 = m)
     {
-        R += n
+        result += n
     }
 }
 
-int result <- r
+int result <- result

@@ -39,7 +39,10 @@ namespace labproject
             var state = states[currentState];
             var matched = false;
 
-            transitions.ToList().ForEach(transition =>
+            if (input.Count() == 0 && finalStates.Contains(currentState))
+                return;
+
+            transitions.Where(transition => transition.startState == currentState).ToList().ForEach(transition =>
             {
                 var nextStates = transition.IsMatch(input.First());
 
@@ -47,14 +50,12 @@ namespace labproject
                     matched = true;
 
                 foreach(var nextState in nextStates)
-                {
-                    if(!finalStates.Contains(nextState))
-                        continue;
-                    Transition(input.Skip(1).ToString(), nextState);
-                }
+                    Transition(new string(input.Skip(1).ToArray()), nextState);
             });
 
-            if (!matched)
+            if (!matched && input.Count() != 0)
+                throw new Exception("Not accepted");
+            if (input.Count() == 0 && !finalStates.Contains(currentState))
                 throw new Exception("Not accepted");
         }
     }

@@ -14,8 +14,9 @@ namespace labproject
 
         static void Main(string[] args)
         {
-            PresentFA("FA.json");
-            //Console.ReadKey();
+            //PresentFA("FA.json");
+            Scanning("test.txt");
+            Console.ReadKey();
         }
 
         static void PresentFA(string path)
@@ -35,6 +36,7 @@ namespace labproject
             Console.WriteLine("3. Final States");
             Console.WriteLine("4. Transitions");
             Console.WriteLine("5. Alphabet");
+            Console.WriteLine("6. Check string");
 
             while (!finished)
             {
@@ -55,6 +57,11 @@ namespace labproject
                         break;
                     case (5):
                         Console.WriteLine("Alphabet: {0}", JsonConvert.SerializeObject(FA.transitions.Select(x => x.label.ToString()).ToHashSet()));
+                        break;
+                    case (6):
+                        Console.WriteLine("Input string for validation:");
+                        var input = Console.ReadLine();
+                        Console.WriteLine("Result of {0} is {1}", input, FA.CheckMatch(input));
                         break;
                     default: 
                         break;
@@ -176,12 +183,22 @@ namespace labproject
 
         public static bool IsIdentifier(string text)
         {
-            return Regex.IsMatch(text, @"^[a-zA-Z]([a-zA-Z]|\d)*$");
+            using var r = new StreamReader("FAIdentifier.json");
+
+            var FA = JsonConvert.DeserializeObject<FiniteAutomata>(r.ReadToEnd());
+
+            return FA.CheckMatch(text);
+            //return Regex.IsMatch(text, @"^[a-zA-Z]([a-zA-Z]|\d)*$");
         }
 
         public static bool IsConstant(string text)
         {
-            return Regex.IsMatch(text, @"^((\""[^\""]*\"")|([1-9]\d{0,})|0)$");
+            using var r = new StreamReader("FAConstant.json");
+
+            var FA = JsonConvert.DeserializeObject<FiniteAutomata>(r.ReadToEnd());
+
+            return FA.CheckMatch(text);
+            //return Regex.IsMatch(text, @"^((\""[^\""]*\"")|([1-9]\d{0,})|0)$");
         }
 
         public static void GenPIF(int index, string token)

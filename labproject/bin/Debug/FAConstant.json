@@ -1,6 +1,7 @@
 {
     "initialState": "P",
     "finalStates": [
+        "S",
         "R"
     ],
     "states": {
@@ -12,6 +13,9 @@
         },
         "R": {
             "name": "R"
+        },
+        "S": {
+            "name": "S"
         }
     },
     "transitions": [
@@ -20,28 +24,28 @@
             "nextStates": [
                 "Q"
             ],
-            "label": "a"
-        },
-        {
-            "startState": "Q",
-            "nextStates": [
-                "R"
-            ],
-            "label": "b"
-        },
-        {
-            "startState": "P",
-            "nextStates": [
-                "R"
-            ],
-            "label": "b"
+            "label": "\""
         },
         {
             "startState": "Q",
             "nextStates": [
                 "Q"
             ],
-            "label": "a"
+            "label": "[^\"]"
+        },
+        {
+            "startState": "Q",
+            "nextStates": [
+                "R"
+            ],
+            "label": "\""
+        },
+        {
+            "startState": "P",
+            "nextStates": [
+                "S"
+            ],
+            "label": "\\d"
         }
     ]
 }
